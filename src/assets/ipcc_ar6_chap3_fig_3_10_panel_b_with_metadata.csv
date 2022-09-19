@@ -1,0 +1,59 @@
+Conventions,G,BADC-CSV,1,,,,,,,,
+title,G,Trends in tropical atmospheric temperature in the period 1979-1997,,,,,,,,,
+creator,G,Eunice Lo (eunice.lo@bristol.ac.uk),,,,,,,,,
+activity,G,IPCC AR6,,,,,,,,,
+feature_type,G,Vertical temperature profile,,,,,,,,,
+comments,G,These are the plotted data in IPCC AR6 WG1 Chapter 3 Figure 3.10 panel b,,,,,,,,,
+comments,G,"Include radiosonde, reanalysis and CMIP6 data, including their uncertainty where available",,,,,,,,,
+last_revised_date,G,2021-07-08,,,,,,,,,
+coordinate_variable,1,pressure_level,hPa,,,,,,,,
+long_name,1,pressure_level,hPa,,,,,,,,
+type,1,int,,,,,,,,,
+long_name,2,raobcore_v17_trends,degree Celsius per decade,,,,,,,,
+comments,2,Trends from RAOBCORE v1.7 (dotted line in figure),,,,,,,,,
+type,2,float,,,,,,,,,
+long_name,3,rich_v17_trends,degree Celsius per decade,,,,,,,,
+comments,3,Trends from RICH-obs v1.7 mean (dahsed line in figure),,,,,,,,,
+type,3,float,,,,,,,,,
+long_name,4,rich_lower_end_trends,degree Celsius per decade,,,,,,,,
+comments,4,"Trends from the lower end of RICH-obs v1.5.1 ensemble range, recentered to v1.7 (grey shading in figure)",,,,,,,,,
+type,4,float,,,,,,,,,
+long_name,5,rich_upper_end_trends,degree Celsius per decade,,,,,,,,
+comments,5,"Trends from the upper end of RICH-obs v1.5.1 ensemble range, recentered to v1.7 (grey shading in figure)",,,,,,,,,
+type,5,float,,,,,,,,,
+long_name,6,era5_trends,degree Celsius per decade,,,,,,,,
+comments,6,Trends from ERA5/5.1 (solid line in figure),,,,,,,,,
+type,6,float,,,,,,,,,
+long_name,7,cmip6_coupled_trends,degree Celsius per decade,,,,,,,,
+comments,7,"Trends from CMIP6 coupled ocean models, multi-model mean (red squares in figure)",,,,,,,,,
+type,7,float,,,,,,,,,
+long_name,8,cmip6_coupled_lower_trends,degree Celsius per decade,,,,,,,,
+comments,8,"Trends from CMIP6 coupled ocean models, 5th percentile of multi-model ensemble (lower end of red range in figure)",,,,,,,,,
+type,8,float,,,,,,,,,
+long_name,9,cmip6_coupled_upper_trends,degree Celsius per decade,,,,,,,,
+comments,9,"Trends from CMIP6 coupled ocean models, 95th percentile of multi-model ensemble (upper end of red range in figure)",,,,,,,,,
+type,9,float,,,,,,,,,
+long_name,10,cmip6_amip_trends,degree Celsius per decade,,,,,,,,
+comments,10,"Trends from CMIP6 prescribed SSTs models, multi-model mean (blue squares in figure)",,,,,,,,,
+type,10,float,,,,,,,,,
+long_name,11,cmip6_amip_lower_trends,degree Celsius per decade,,,,,,,,
+comments,11,"Trends from CMIP6 prescribed SSTs models, 5th percentile of multi-model ensemble (lower end of blue range in figure)",,,,,,,,,
+type,11,float,,,,,,,,,
+long_name,12,cmip6_amip_upper_trends,degree Celsius per decade,,,,,,,,
+comments,12,"Trends from CMIP6 prescribed SSTs models, 95th percentile of multi-model ensemble (upper end of blue range in figure)",,,,,,,,,
+type,12,float,,,,,,,,,
+data,,,,,,,,,,,
+1,2,3,4,5,6,7,8,9,10,11,12
+850,0.094562315,0.088742455,0.03660958,0.160814767,0.067351183,0.084904976,-0.068369441,0.210669867,0.129053268,0.082352402,0.175547766
+700,0.04720755,0.09768867,0.052488268,0.16376322,0.039462986,0.099091941,-0.085721457,0.274925019,0.170651611,0.131315401,0.220135579
+500,0.04994619,0.033678872,-0.004513238,0.059738314,0.081449447,0.107443075,-0.077089547,0.288582735,0.189223459,0.148125471,0.234841454
+400,0.052304179,0.087268815,0.009726528,0.138139548,0.098115457,0.126155508,-0.125732138,0.338740715,0.224531805,0.173453287,0.277567096
+300,0.077676882,0.072377201,0.011458669,0.114477847,0.04689525,0.134207413,-0.19218024,0.40926903,0.258631616,0.193202639,0.325579597
+200,0.143974809,0.151820152,0.075243858,0.229617961,0.108648717,0.1344901,-0.168092015,0.427974795,0.27237515,0.221771084,0.340927777
+150,0.201237539,0.143913819,0.000673291,0.277397915,0.191376784,0.130441949,-0.112763303,0.388103365,0.264720644,0.178512907,0.381010507
+100,0.052101752,-0.062027648,-0.157531237,0.053170029,-0.159714435,0.126782293,-0.060167549,0.279077632,0.094274019,-0.093243446,0.246988064
+70,-0.33705083,-0.480663428,-0.639702392,-0.334181086,-0.652037577,-0.045964049,-0.452755091,0.199743797,-0.253396983,-0.63026979,0.018795411
+50,-0.531287528,-0.727240034,-0.852682369,-0.546593586,-0.793126746,-0.253094602,-0.677673498,0.052633357,-0.336614019,-0.620477176,-0.051439403
+30,-0.378850698,-0.825854669,-1.062345253,-0.681859055,-0.792138045,-0.408800047,-0.784480059,-0.025342297,-0.427522622,-0.715210843,-0.108091451
+20,-0.387250685,-0.909997777,-1.051837109,-0.76367999,-0.793371587,-0.520068997,-0.805341153,-0.165388109,-0.531892251,-0.73803419,-0.220862011
+end_data,,,,,,,,,,,
