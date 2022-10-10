@@ -45,17 +45,30 @@
         class="warning-text"
         style:transform={"translate(-50%, -50%)"}
         style:scale={i === activeIndex ? 1 : 0}
-        style="position: fixed; left: 50%; top: 50%; color: white;
+        style="font-size: 3rem; position: fixed; left: 50%; top: 50%; color: white;
           transition: all 1.4s"
       >
-        {@html warning}
+        {#if i != warnings.length - 1}
+          {@html warning}
+        {/if}
       </div>
 
       <!-- relatives -->
       <div
         class="warning-placeholder"
-        style="height: 200vh; color: white; width: 100vw"
-      />
+        style="height: 200vh; color: white; width: 100vw; position: relative"
+      >
+        {#if i === warnings.length - 1}
+          <div
+            class=""
+            style:scale={i === activeIndex ? 1 : 0}
+            style="font-size: 3rem; color:white; position: sticky; top: 50%; text-align: center;
+            transition: all 1.4s;"
+          >
+            here
+          </div>
+        {/if}
+      </div>
     {/each}
   </div>
 </div>
