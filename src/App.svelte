@@ -24,10 +24,40 @@
   });
 
   let currentIndex;
-  $: console.log(`currentI: `, currentIndex);
 
   let steps;
+  let imgtext = "We";
+  let imgIndex;
+
   $: if (steps) {
+    let imagescroller = scrollama();
+    imagescroller
+      .setup({
+        step: ".introimg",
+        offset: 0.2,
+        progress: true,
+      })
+      .onStepEnter((e) => {
+        console.log(e.index);
+        imgIndex = e.index;
+        switch (e.index) {
+          case 0:
+            imgtext = "We";
+            break;
+          case 1:
+            imgtext = "We are";
+            break;
+          case 2:
+            imgtext = "We are destroying";
+            break;
+          case 3:
+            imgtext = "We are destroying <strong>OUR ONLY</strong> World";
+            break;
+        }
+      });
+
+    console.log(`introscroller: `, imagescroller);
+
     let scroller = scrollama();
     scroller
       .setup({
@@ -35,7 +65,6 @@
         offset: 0.6,
         progress: true,
       })
-
       .onStepEnter((e) => {
         currentIndex = e.index;
       })
@@ -81,8 +110,12 @@
 <svelte:window bind:innerHeight={height} bind:innerWidth={width} />
 
 <div class="opening-images">
-  <div>open1</div>
-  <div>Open2</div>
+  <div class="introtext">
+    {imgtext}
+  </div>
+  <div class="introimg image1" />
+  <div class="introimg image2" />
+  <div class="introimg image3" />
 </div>
 
 {#if currentIndex !== undefined}
@@ -187,14 +220,52 @@
 </div>
 
 <style lang="scss">
-  .opening-images {
-    & > * {
-      height: 100vh;
-      background-image: linear-gradient(green, yellow);
-    }
-  }
   :root {
     background-image: linear-gradient(lightblue, rgb(230, 175, 175));
+  }
+
+  .opening-images {
+    position: relative;
+
+    .introtext {
+      background-color: black;
+      opacity: 0.5;
+      font-size: 4rem;
+      top: 0;
+      position: sticky;
+      color: white;
+    }
+
+    & .image1 {
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-image: url("/images/wave.jpg");
+    }
+
+    & .image2 {
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-image: url("/images/oil.jpg");
+    }
+
+    & .image3 {
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      // background-attachment: fixed;
+      background-image: url("/images/moon.jpg");
+    }
+
+    & div:last-child {
+      margin-bottom: 100px;
+    }
   }
 
   .header-panel {
