@@ -109,7 +109,7 @@
 
 <svelte:window bind:innerHeight={height} bind:innerWidth={width} />
 
-<IntroImages index={imgIndex} imgtext={imgtext.split(" ")} />
+<!-- <IntroImages index={imgIndex} imgtext={imgtext.split(" ")} /> -->
 <Warnings />
 
 {#if currentIndex !== undefined}
@@ -134,24 +134,7 @@
 {/if}
 <div class="scrolly">
   <!-- The steps -->
-  <div class="text-container">
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
-    necessitatibus eveniet, aperiam et autem, quas quasi omnis soluta quos
-    maiores, commodi at! Porro ipsa quaerat nostrum mollitia qui cumque
-    corrupti. Pariatur autem natus porro assumenda, tempora exercitationem omnis
-    mollitia. Distinctio minima nisi temporibus recusandae voluptate iste
-    voluptates doloribus, vitae consequatur dolorum eligendi praesentium
-    repellat earum autem inventore impedit. Officiis, quasi. Autem nulla debitis
-    optio inventore dicta atque, ea, reprehenderit ut non commodi quae ipsam?
-    Labore ducimus, temporibus harum officiis repudiandae qui consequatur,
-    expedita deserunt eos ea similique maiores iure veniam. Voluptatem eum quo,
-    quidem perferendis at neque quod quisquam modi voluptatum odio quia sed,
-    animi, reiciendis magni praesentium sapiente ducimus perspiciatis a sit ex
-    itaque. Similique reprehenderit reiciendis atque dolorem. Ducimus voluptatem
-    harum non dolore necessitatibus deleniti soluta ullam magni, numquam
-    nesciunt delectus cum, aliquam officiis amet magnam! Placeat at earum
-    veritatis laborum. Assumenda alias sed omnis deleniti sint laudantium.
-  </div>
+  <div class="text-container" />
   <!-- the Map -->
   <div class="map-container">
     {#if height}

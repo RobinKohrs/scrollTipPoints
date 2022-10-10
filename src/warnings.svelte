@@ -3,73 +3,89 @@
   import scrollama from "scrollama";
 
   let warnings = [
-    "Weather is changing fast",
-    "Climate is changing slowly",
-    "We are used to the rush",
-    "And don't see climate change",
-    "as the <strong>largest</strong> threat to humandkind",
+    "A new Study, published by ....",
+    "Highlights <strong>16</strong> potential climate tipping points",
+    "If they are reached,",
+    "things might get out of control",
   ];
   let container;
 
   let index;
   let activeIndex;
+  $: console.log(`active: `, activeIndex);
   $: if (container) {
     let scroller = scrollama();
     scroller
       .setup({
-        step: ".warning",
-        offset: 0.8,
-        progress: false,
+        step: ".warning-placeholder",
+        offset: 0.3,
+        progress: true,
+        debug: true,
       })
       .onStepEnter((e) => {
         activeIndex = e.index;
-      });
+      })
+      .onStepExit((e) => {
+        // activeIndex = e.index;
+      })
+      .onStepProgress((p) => {});
   }
 </script>
 
 <div class="container" bind:this={container}>
-  {#each warnings as warn, i}
-    <div class="warning">
+  <div style="position: fixed;">active: {activeIndex}</div>
+  <div
+    class="paintwall"
+    style:height="{200 * warnings.length + 1}vh"
+    style="background-color: black; position: relative; width: 100vw;"
+  >
+    {#each warnings as warning, i}
+      <!-- absolutes -->
       <div
-        in:fade
         class="warning-text"
-        style="transition: all 1s;"
-        style:opacity={i === activeIndex ? 1 : 0.1}
+        style:transform={"translate(-50%, -50%)"}
+        style:scale={i === activeIndex ? 1 : 0}
+        style="position: fixed; left: 50%; top: 50%; color: white;
+          transition: all 1.4s"
       >
-        {@html warn}
+        {@html warning}
       </div>
-    </div>
-  {/each}
+
+      <!-- relatives -->
+      <div
+        class="warning-placeholder"
+        style="height: 200vh; color: white; width: 100vw"
+      />
+    {/each}
+  </div>
 </div>
 
 <style lang="scss">
   .warning {
-    position: sticky;
+    // position: sticky;
+    // outline: 1px solid black;
+    // width: 100vw;
+    // top: 0;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // font-size: 3rem;
+    // background-image: linear-gradient(white, white);
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // height: 100vh;
+    // background-attachment: fixed;
     width: 100vw;
-    top: 0;
+    position: relative;
+    background-color: black;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    background-image: linear-gradient(black, black);
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 400px;
-    padding: 200px 0;
-    background-attachment: fixed;
 
     & .warning-text {
       position: absolute;
       color: white;
     }
-  }
-
-  div.warning:nth-child(5) {
-    padding-top: 0;
-    position: relative;
-  }
-
-  .warning:first-child {
-    padding-top: 300px;
   }
 </style>
