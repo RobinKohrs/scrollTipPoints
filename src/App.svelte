@@ -9,6 +9,9 @@
   const d3 = { geoOrthographic, geoNaturalEarth1, geoPath, csv };
   const globe = d3.geoNaturalEarth1();
 
+  import IntroImages from "./introImages.svelte";
+  import Warnings from "./warnings.svelte";
+
   import scrollama from "scrollama";
   import * as topojson from "topojson";
   const worldGJ = topojson.feature(world, world.objects.wworld);
@@ -26,7 +29,7 @@
   let currentIndex;
 
   let steps;
-  let imgtext = "We";
+  let imgtext = "";
   let imgIndex;
 
   $: if (steps) {
@@ -34,11 +37,10 @@
     imagescroller
       .setup({
         step: ".introimg",
-        offset: 0.2,
-        progress: true,
+        offset: 0.3,
+        progress: false,
       })
       .onStepEnter((e) => {
-        console.log(e.index);
         imgIndex = e.index;
         switch (e.index) {
           case 0:
@@ -55,8 +57,6 @@
             break;
         }
       });
-
-    console.log(`introscroller: `, imagescroller);
 
     let scroller = scrollama();
     scroller
@@ -109,14 +109,8 @@
 
 <svelte:window bind:innerHeight={height} bind:innerWidth={width} />
 
-<div class="opening-images">
-  <div class="introtext">
-    {imgtext}
-  </div>
-  <div class="introimg image1" />
-  <div class="introimg image2" />
-  <div class="introimg image3" />
-</div>
+<IntroImages index={imgIndex} imgtext={imgtext.split(" ")} />
+<Warnings />
 
 {#if currentIndex !== undefined}
   <div
