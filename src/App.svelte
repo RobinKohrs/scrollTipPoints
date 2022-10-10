@@ -1,36 +1,50 @@
 <script>
   import { tps } from "./assets/tp";
+  import { csv } from "d3-fetch";
   import { geoOrthographic, geoNaturalEarth1, geoPath } from "d3-geo";
   import world from "./assets/world.json";
   import { fade, fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
 
-  const d3 = { geoOrthographic, geoNaturalEarth1, geoPath };
+  const d3 = { geoOrthographic, geoNaturalEarth1, geoPath, csv };
   const globe = d3.geoNaturalEarth1();
 
   import scrollama from "scrollama";
   import * as topojson from "topojson";
   const worldGJ = topojson.feature(world, world.objects.wworld);
 
-  let mapContainer, steps;
-  let scroller;
-  // initialize the scrollama
+  // data as csv
+  let data_path = "./data/tp.csv";
+  let data, dataLoaded;
+  d3.csv(data_path).then((d) => {
+    // sort data
+    d.sort((cu, ne) => cu.min > ne.min);
+    data = d;
+    dataLoaded = true;
+  });
 
   let currentIndex;
-  $: console.log(`currentIndex: `, currentIndex);
-  $: if (mapContainer) {
-    scroller = scrollama();
+  $: console.log(`currentI: `, currentIndex);
+
+  let steps;
+  $: if (steps) {
+    let scroller = scrollama();
     scroller
       .setup({
         step: ".step",
         offset: 0.6,
         progress: true,
-        // debug: true,
       })
+
       .onStepEnter((e) => {
         currentIndex = e.index;
       })
-      .onStepProgress((e) => {});
+      .onStepProgress((e) => {})
+      .onStepExit((e) => {
+        if (e.index == 0 && e.direction == "up") {
+          currentIndex = undefined;
+        }
+      });
   }
 
   let height, width;
@@ -42,7 +56,6 @@
     projection = globe.fitSize([svgSizes.width, svgSizes.height], {
       type: "Sphere",
     });
-    console.log("projection: ", projection);
     path = d3.geoPath().projection(projection);
   }
 
@@ -55,9 +68,11 @@
   let x = tweened(0);
   let y = tweened(0);
 
-  $: console.log(`xCoord: `, x);
   $: if (currentIndex >= 0) {
-    let [xval, yval] = projection(tps[currentIndex].coords);
+    let [xval, yval] = projection([
+      +data[currentIndex].x,
+      +data[currentIndex].y,
+    ]);
     x.set(xval);
     y.set(yval);
   }
@@ -65,6 +80,31 @@
 
 <svelte:window bind:innerHeight={height} bind:innerWidth={width} />
 
+<div class="opening-images">
+  <div>open1</div>
+  <div>Open2</div>
+</div>
+
+{#if currentIndex !== undefined}
+  <div
+    in:fade={{ duration: 900 }}
+    out:fade={{ duration: 900 }}
+    class="header-panel"
+  >
+    <div class="min-panel">
+      <div>Minimum</div>
+      <div>
+        {data[currentIndex].min} °C
+      </div>
+    </div>
+    <div class="max-panel">
+      <div>Maximum</div>
+      <div>
+        {data[currentIndex].max} °C
+      </div>
+    </div>
+  </div>
+{/if}
 <div class="scrolly">
   <!-- The steps -->
   <div class="text-container">
@@ -86,7 +126,7 @@
     veritatis laborum. Assumenda alias sed omnis deleniti sint laudantium.
   </div>
   <!-- the Map -->
-  <div class="map-container" bind:this={mapContainer}>
+  <div class="map-container">
     {#if height}
       <svg
         width={svgSizes.width}
@@ -95,12 +135,7 @@
       >
         {#each worldGJ.features as f}
           <g>
-            <path
-              d={path(f)}
-              fill="#f8f8f8"
-              stroke="#ababab"
-              stroke-width="0.5"
-            />
+            <path d={path(f)} fill="#f8f8f8" stroke="#000" stroke-width=".5" />
           </g>
         {/each}
         {#if $x > 0 && $y > 0}
@@ -114,33 +149,78 @@
       </svg>
     {/if}
   </div>
-  <div class="text-container">
-    {#each tps as step, i}
-      <div
-        class="step"
-        class:active={i === currentIndex}
-        style:height={height * 0.25 + "px"}
-      >
-        <div class="tp-name">
-          {step.name}
+  <div class="scroll-container">
+    {#if data}
+      {#each data as step, i}
+        <div
+          class="step"
+          class:active={i === currentIndex}
+          style:height={height * 0.25 + "px"}
+          bind:this={steps}
+        >
+          <div class="tp-name">
+            {step.name}
+          </div>
+          <div class="tp-text">{@html step.content_en}</div>
         </div>
-        <div class="tp-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-          voluptatum quod blanditiis libero assumenda, debitis temporibus.
-          Similique totam sequi quam blanditiis rem facere natus, voluptatum nam
-          sunt officiis et inventore!
-        </div>
-      </div>
-    {/each}
+      {/each}
+    {/if}
   </div>
+</div>
+<div class="text-container" style="padding-bottom: 400px;">
+  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
+  necessitatibus eveniet, aperiam et autem, quas quasi omnis soluta quos
+  maiores, commodi at! Porro ipsa quaerat nostrum mollitia qui cumque corrupti.
+  Pariatur autem natus porro assumenda, tempora exercitationem omnis mollitia.
+  Distinctio minima nisi temporibus recusandae voluptate iste voluptates
+  doloribus, vitae consequatur dolorum eligendi praesentium repellat earum autem
+  inventore impedit. Officiis, quasi. Autem nulla debitis optio inventore dicta
+  atque, ea, reprehenderit ut non commodi quae ipsam? Labore ducimus, temporibus
+  harum officiis repudiandae qui consequatur, expedita deserunt eos ea similique
+  maiores iure veniam. Voluptatem eum quo, quidem perferendis at neque quod
+  quisquam modi voluptatum odio quia sed, animi, reiciendis magni praesentium
+  sapiente ducimus perspiciatis a sit ex itaque. Similique reprehenderit
+  reiciendis atque dolorem. Ducimus voluptatem harum non dolore necessitatibus
+  deleniti soluta ullam magni, numquam nesciunt delectus cum, aliquam officiis
+  amet magnam! Placeat at earum veritatis laborum. Assumenda alias sed omnis
+  deleniti sint laudantium.
 </div>
 
 <style lang="scss">
+  .opening-images {
+    & > * {
+      height: 100vh;
+      background-image: linear-gradient(green, yellow);
+    }
+  }
   :root {
-    background-image: linear-gradient(
-      rgba(173, 216, 230, 0.1),
-      // rgba(255, 0, 0, 0.2)
-    );
+    background-image: linear-gradient(lightblue, rgb(230, 175, 175));
+  }
+
+  .header-panel {
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: darkgray;
+    padding: 1rem;
+    color: black;
+
+    @media screen and(max-width: 450px) {
+      font-size: 3rem;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .text-container {
+    max-width: 50vw;
+    margin: 0 auto;
   }
 
   .scrolly {
@@ -156,7 +236,7 @@
       // outline: 4px solid black;
     }
 
-    & .text-container {
+    & .scroll-container {
       position: relative;
       max-width: 50vw;
       margin: 0 auto;
@@ -166,31 +246,36 @@
         z-index: 1000;
         text-align: center;
         margin: 500px 0;
-        // font-size: 2px;
-        opacity: 0.1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+        opacity: 0.8;
 
-      & .step .tp-name {
-        background-color: black;
-        background-color: rgba($color: #000000, $alpha: 0.2);
-        border-radius: 1rem;
-        margin: 1rem;
-        padding: 1rem;
-        max-width: fit-content;
-      }
+        & > * {
+          border: 1px solid black;
+        }
 
-      & .step.active {
-        padding: 20px;
-        opacity: 1;
-        font-size: 1rem;
-        transition: all 0.5s;
-      }
+        & .tp-name {
+          background-color: #f1f1f1;
+          font-size: 1.4rem;
+          padding: 1rem;
+          border-radius: 1rem 1rem 0 0;
 
-      & .step:last-child {
-        padding-bottom: 1000px;
+          @media screen and(max-width: 450px) {
+            font-size: 1rem;
+            padding: 0.3rem;
+          }
+        }
+        & .tp-text {
+          background-color: #f1f1f1;
+          border-radius: 0 0 1rem 1rem;
+          padding: 0.2rem;
+
+          @media screen and(max-width: 450px) {
+            font-size: 0.8rem;
+          }
+        }
+      }
+      .step:last-child {
+        padding-bottom: 400px;
+        margin: 100px 0;
       }
     }
   }
