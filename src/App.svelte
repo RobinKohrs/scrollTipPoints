@@ -2,7 +2,7 @@
   import { tps } from "./assets/tp";
   import { csv } from "d3-fetch";
   import { geoOrthographic, geoNaturalEarth1, geoPath } from "d3-geo";
-  import world from "./assets/world.json";
+  import world from "./assets/world_simp2.json";
   import { fade, fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
 
@@ -178,7 +178,7 @@
           bind:this={steps}
         >
           <div class="tp-name">
-            {step.name}
+            {step.name_en}
           </div>
           <div class="tp-text">{@html step.content_en}</div>
         </div>
@@ -202,10 +202,10 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: darkgray;
-    padding: 1rem;
+    // background-color: darkgray;
+    // padding: 1rem;
     color: black;
-    font-size: 3rem;
+    font-size: 2rem;
 
     @media screen and(max-width: 450px) {
       font-size: 1rem;
@@ -214,6 +214,13 @@
     & > div {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      border-top: 0;
+      padding: 0.5rem;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      border-left: 1px solid black;
+      border-radius: 0 0 0.5rem 0.5rem;
     }
   }
 

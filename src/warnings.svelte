@@ -2,7 +2,6 @@
   export let currentIndex;
   export let disappear;
   export let mobile;
-  $: console.log(`mobile`, mobile);
 
   import { fade } from "svelte/transition";
   import scrollama from "scrollama";
@@ -14,7 +13,7 @@
   const globe = d3.geoNaturalEarth1();
 
   //   World
-  import world from "./assets/world.json";
+  import world from "./assets/world_simp.json";
   import * as topojson from "topojson";
   import { xlink_attr } from "svelte/internal";
   const worldGJ = topojson.feature(world, world.objects.wworld);
@@ -64,7 +63,7 @@
         shake = false;
       })
       .onStepExit((e) => {
-        if (e.index === 0) activeIndex = undefined;
+        if (e.index === 0 && e.direction === "up") activeIndex = undefined;
         if (e.index === 3) shake = true;
       })
       .onStepProgress((p) => {});
@@ -74,19 +73,18 @@
 <svelte:window bind:innerHeight={height} bind:innerWidth={width} />
 
 <div class="container" bind:this={container}>
-  <div style="position: fixed;">active: {activeIndex}</div>
   <div class="map" style="position: fixed; top: 0; left: 0; z-index: 0;">
     <svg {width} {height}>
-      {#if data && activeIndex !== undefined && !disappear}
+      {#if dataLoaded && activeIndex !== undefined && !disappear}
         {#each data as d, i}
           {@const [x, y] = projection([+d.x, +d.y])}
           <g>
             <filter id="blur">
-              <feGaussianBlur stdDeviation="2" />
+              <feGaussianBlur stdDeviation="1" />
             </filter>
             <circle
               in:fade={{ duration: 1200 }}
-              r={mobile ? "5" : "13"}
+              r={mobile ? "3" : "10"}
               fill={i <= currentIndex ? "#000000" : "#ff0000"}
               cx={x}
               cy={y}
@@ -130,11 +128,11 @@
             transition: all 1.4s;"
           >
             {@html warning}
-            {#if shake}
+            <!-- {#if shake}
               <audio autoplay>
                 <source src="sound/thunder.wav" type="audio/x-wav" />
               </audio>
-            {/if}
+            {/if} -->
           </div>
         {/if}
       </div>
