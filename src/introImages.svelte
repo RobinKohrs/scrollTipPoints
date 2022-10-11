@@ -3,10 +3,15 @@
 
   export let imgtext;
   export let index;
+  export let mobile;
 </script>
 
 <div class="opening-images">
-  <div class="introtext" style:position={index === 0 ? "fixed" : "sticky"}>
+  <div
+    class="introtext"
+    style:position={index === 0 ? "fixed" : "sticky"}
+    style:font-size={mobile ? "2rem" : "3rem"}
+  >
     {#each imgtext as text, i}
       <span in:fade out:fade>
         {@html text}
@@ -24,7 +29,6 @@
     position: relative;
 
     .introtext {
-      font-size: 4rem;
       top: 0;
       color: white;
       width: fit-content;

@@ -53,7 +53,7 @@
             imgtext = "We are destroying";
             break;
           case 3:
-            imgtext = "We are destroying <strong>OUR ONLY</strong> World";
+            imgtext = "We are destroying <strong>Everything</strong>";
             break;
         }
       });
@@ -77,6 +77,7 @@
   }
 
   let height, width;
+  $: mobile = width <= 450;
 
   let projection;
   let path;
@@ -109,14 +110,15 @@
 
 <svelte:window bind:innerHeight={height} bind:innerWidth={width} />
 
-<!-- <IntroImages index={imgIndex} imgtext={imgtext.split(" ")} /> -->
-<Warnings />
+<IntroImages index={imgIndex} imgtext={imgtext.split(" ")} {mobile} />
+<Warnings {currentIndex} disappear={currentIndex === 15} {mobile} />
 
 {#if currentIndex !== undefined}
   <div
     in:fade={{ duration: 900 }}
     out:fade={{ duration: 900 }}
     class="header-panel"
+    style="opacity: .8;"
   >
     <div class="min-panel">
       <div>Minimum</div>
@@ -143,7 +145,7 @@
         height={svgSizes.height}
         viewBox="0 0 {svgSizes.width} {svgSizes.height}"
       >
-        {#each worldGJ.features as f}
+        {#each worldGJ.features as f, i}
           <g>
             <path d={path(f)} fill="#f8f8f8" stroke="#000" stroke-width=".5" />
           </g>
@@ -153,7 +155,13 @@
             <filter id="blur">
               <feGaussianBlur stdDeviation="2" />
             </filter>
-            <circle r="13" fill="#ff0000" cx={$x} cy={$y} filter="url(#blur)" />
+            <circle
+              r={mobile ? "5" : "13"}
+              fill="#ff0000"
+              cx={$x}
+              cy={$y}
+              filter="url(#blur)"
+            />
           </g>
         {/if}
       </svg>
@@ -164,6 +172,7 @@
       {#each data as step, i}
         <div
           class="step"
+          style="z-index: 10;"
           class:active={i === currentIndex}
           style:height={height * 0.25 + "px"}
           bind:this={steps}
@@ -177,72 +186,13 @@
     {/if}
   </div>
 </div>
-<div class="text-container" style="padding-bottom: 400px;">
-  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
-  necessitatibus eveniet, aperiam et autem, quas quasi omnis soluta quos
-  maiores, commodi at! Porro ipsa quaerat nostrum mollitia qui cumque corrupti.
-  Pariatur autem natus porro assumenda, tempora exercitationem omnis mollitia.
-  Distinctio minima nisi temporibus recusandae voluptate iste voluptates
-  doloribus, vitae consequatur dolorum eligendi praesentium repellat earum autem
-  inventore impedit. Officiis, quasi. Autem nulla debitis optio inventore dicta
-  atque, ea, reprehenderit ut non commodi quae ipsam? Labore ducimus, temporibus
-  harum officiis repudiandae qui consequatur, expedita deserunt eos ea similique
-  maiores iure veniam. Voluptatem eum quo, quidem perferendis at neque quod
-  quisquam modi voluptatum odio quia sed, animi, reiciendis magni praesentium
-  sapiente ducimus perspiciatis a sit ex itaque. Similique reprehenderit
-  reiciendis atque dolorem. Ducimus voluptatem harum non dolore necessitatibus
-  deleniti soluta ullam magni, numquam nesciunt delectus cum, aliquam officiis
-  amet magnam! Placeat at earum veritatis laborum. Assumenda alias sed omnis
-  deleniti sint laudantium.
+<div class="text-container" style="padding-bottom: 400px; font-size: 4rem;">
+  <div>This it it...</div>
 </div>
 
 <style lang="scss">
   :root {
     background-image: linear-gradient(lightblue, rgb(230, 175, 175));
-  }
-
-  .opening-images {
-    position: relative;
-
-    .introtext {
-      background-color: black;
-      opacity: 0.5;
-      font-size: 4rem;
-      top: 0;
-      position: sticky;
-      color: white;
-    }
-
-    & .image1 {
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-image: url("/images/wave.jpg");
-    }
-
-    & .image2 {
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-image: url("/images/oil.jpg");
-    }
-
-    & .image3 {
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      // background-attachment: fixed;
-      background-image: url("/images/moon.jpg");
-    }
-
-    & div:last-child {
-      margin-bottom: 100px;
-    }
   }
 
   .header-panel {
@@ -255,9 +205,10 @@
     background-color: darkgray;
     padding: 1rem;
     color: black;
+    font-size: 3rem;
 
     @media screen and(max-width: 450px) {
-      font-size: 3rem;
+      font-size: 1rem;
     }
 
     & > div {
