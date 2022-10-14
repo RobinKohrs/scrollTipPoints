@@ -113,7 +113,7 @@
 <IntroImages index={imgIndex} imgtext={imgtext.split(" ")} {mobile} />
 <Warnings {currentIndex} disappear={currentIndex === 15} {mobile} />
 
-{#if currentIndex !== undefined}
+{#if currentIndex !== undefined && currentIndex !== data.length - 1}
   <div
     in:fade={{ duration: 900 }}
     out:fade={{ duration: 900 }}
@@ -121,23 +121,23 @@
     style="opacity: .8;"
   >
     <div class="min-panel">
+      <div style="font-size: .8rem;">Might be reached at:</div>
       <div>Minimum</div>
       <div>
-        {data[currentIndex].min} °C
+        + {data[currentIndex].min} °C
       </div>
     </div>
     <div class="max-panel">
+      <div style="font-size: .8rem;">Might be reached at:</div>
       <div>Maximum</div>
       <div>
-        {data[currentIndex].max} °C
+        + {data[currentIndex].max} °C
       </div>
     </div>
   </div>
 {/if}
 <div class="scrolly">
-  <!-- The steps -->
   <div class="text-container" />
-  <!-- the Map -->
   <div class="map-container">
     {#if height}
       <svg
@@ -187,12 +187,35 @@
   </div>
 </div>
 <div class="text-container" style="padding-bottom: 400px; font-size: 4rem;">
-  <div>This it it...</div>
+  <div>
+    <div style="font-size: 1.3rem;">The study</div>
+    <ul>
+      <li>
+        <a
+          href="https://www.science.org/doi/pdf/10.1126/science.abn7950?download=true"
+          >Science [yes, click here]</a
+        >
+      </li>
+    </ul>
+    <div style="font-size: 1.3rem;">The Gist</div>
+    <ul>
+      <li>Things are getting warm in some regions</li>
+      <li>And cold in others</li>
+      <li>The climate system reacts slowly</li>
+      <li>But once certain points are reached, there might be no way back</li>
+      <li>In the not so long term this will be our by far biggest problem</li>
+      <li>
+        Our actions are the reason, its <strong
+          >NOT JUST NATURAL VARIABILITY</strong
+        >
+      </li>
+    </ul>
+  </div>
 </div>
 
 <style lang="scss">
   :root {
-    background-image: linear-gradient(lightblue, rgb(230, 175, 175));
+    background-image: linear-gradient(#f1f1f1);
   }
 
   .header-panel {
@@ -227,6 +250,19 @@
   .text-container {
     max-width: 50vw;
     margin: 0 auto;
+
+    & > div {
+      font-weight: 900;
+    }
+
+    & li {
+      font-weight: 240;
+      font-size: 1rem;
+      list-style: circle;
+      padding: 1.2rem;
+      position: relative;
+      left: 20px;
+    }
   }
 
   .scrolly {
@@ -279,10 +315,10 @@
           }
         }
       }
-      .step:last-child {
-        padding-bottom: 400px;
-        margin: 100px 0;
-      }
+      // .step:last-child {
+      //   padding-bottom: 100px;
+      //   margin: 100px 0;
+      // }
     }
   }
 </style>

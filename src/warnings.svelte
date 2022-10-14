@@ -40,7 +40,7 @@
 
   let warnings = [
     'A new Study, published by scientist around <a href="https://www.science.org/doi/10.1126/science.abn7950">Mc. Kay et al. (2022)</a>',
-    "Highlights <strong>16</strong> potential climate tipping points",
+    "lists <strong>16</strong> potential climate tipping points",
     "that if reached",
     "might put things out of our control...",
   ];
@@ -156,43 +156,43 @@
     }
   }
 
-  .shake {
-    animation: shake 0.5s;
-  }
+  // .shake {
+  //   animation: shake 0.5s;
+  // }
 
-  @keyframes shake {
-    0% {
-      transform: translateX(0);
-    }
-    10% {
-      transform: translateX(25px);
-    }
-    14% {
-      transform: translateX(25px);
-    }
-    19% {
-      transform: translateX(25px);
-    }
-    25% {
-      transform: translateX(20px);
-    }
-    25% {
-      transform: translateY(20px);
-      transform: translateY(-20px);
-    }
-    30% {
-      transform: translateX(10px);
-      transform: translateY(40px);
-    }
-    35% {
-      transform: translateX(40px);
-    }
+  // @keyframes shake {
+  //   0% {
+  //     transform: translateX(0);
+  //   }
+  //   10% {
+  //     transform: translateX(25px);
+  //   }
+  //   14% {
+  //     transform: translateX(25px);
+  //   }
+  //   19% {
+  //     transform: translateX(25px);
+  //   }
+  //   25% {
+  //     transform: translateX(20px);
+  //   }
+  //   25% {
+  //     transform: translateY(20px);
+  //     transform: translateY(-20px);
+  //   }
+  //   30% {
+  //     transform: translateX(10px);
+  //     transform: translateY(40px);
+  //   }
+  //   35% {
+  //     transform: translateX(40px);
+  //   }
 
-    50% {
-      transform: translateX(-25px);
-    }
-    100% {
-      transform: translateX(0px);
-    }
-  }
+  //   50% {
+  //     transform: translateX(-25px);
+  //   }
+  //   100% {
+  //     transform: translateX(0px);
+  //   }
+  // }
 </style>
