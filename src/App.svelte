@@ -53,7 +53,7 @@
             imgtext = "We are destroying";
             break;
           case 3:
-            imgtext = "We are destroying <strong>Everything</strong>";
+            imgtext = "We are destroying <strong>the world</strong>";
             break;
         }
       });
@@ -204,11 +204,6 @@
       <li>The climate system reacts slowly</li>
       <li>But once certain points are reached, there might be no way back</li>
       <li>In the not so long term this will be our by far biggest problem</li>
-      <li>
-        Our actions are the reason, its <strong
-          >NOT JUST NATURAL VARIABILITY</strong
-        >
-      </li>
     </ul>
   </div>
 </div>
